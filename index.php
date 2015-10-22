@@ -71,13 +71,13 @@
         <div class="page">
         <div class="header_new">
   	<h1>MISTER GUAU</h1>
-  <a href="http://www.misterguau.com/index.php/"><img src="http://www.misterguau.com/skin/frontend/blank/theme048/images/logo.jpg" width="630" height="75" /></a>
+  <a href="index.php/"><img src="http://www.misterguau.com/skin/frontend/blank/theme048/images/logo.jpg" width="630" height="75" /></a>
   </div>
   <div class="bC_caja">
     <ul class="menu-left">
-      <li><a href="http://www.misterguau.com/index.php/customer/account/">REGISTRO</a></li>
+      <li><a href="registro.php">REGISTRO</a></li>
       <li>/</li>
-            <li><a href="http://www.misterguau.com/index.php/customer/account/login/">INICIAR SESIÓN</a></li>
+            <li><a href="MisterguauLogin.php">INICIAR SESIÓN</a></li>
             <!--li>/</li>
       <li><a href="http://www.misterguau.com/index.php/customer/account/">MI CUENTA</a></li-->
     </ul>
@@ -305,57 +305,75 @@ stLight.options({publisher: "95e01ef6-d710-492e-b27e-2b57dbb37911"});
 
 </div>
 
-<?php
+
+           
+                          <?php
 if(isset ($_POST['cerca'])){
-		$municipi = $_POST['municipi'];
-		$animal = $_POST['animal'];
-		echo $municipi;
-		echo $animal;
-		$mu=1;
-		$con = mysqli_connect('localhost', 'root', 'DAW22015', 'bd_botiga_animals');
-		$sql = ("SELECT tbl_anunci.anu_nom, tbl_anunci.anu_contingut, tbl_anunci.anu_data, tbl_anunci.anu_foto, tbl_raca.raca_nom, tbl_contacte.contact_nom, tbl_contacte.contact_telf, tbl_contacte.contact_adre, tbl_municipi.municipi_nom, tbl_tipus_animal.tipus_anim_nom FROM ((((tbl_anunci INNER JOIN tbl_municipi ON tbl_anunci.mun_id = tbl_municipi.municipi_id) INNER JOIN tbl_contacte ON tbl_anunci.contact_id = tbl_contacte.contact_id) INNER JOIN tbl_raca ON tbl_anunci.raca_id = tbl_raca.raca_id) INNER JOIN tbl_tipus_animal ON tbl_raca.tipus_anim_id = tbl_tipus_animal.tipus_anim_id) ");	
-		if($municipi > 0) {
-			$sql.= "WHERE tbl_municipi.municipi_id = $municipi ";
+    $municipi = $_POST['municipi'];
+    $animal = $_POST['animal'];
+	if(isset ($_POST['genere']))$ToP = $_POST['genere'];
+    $mu=1;
+    $con = mysqli_connect('localhost', 'root', 'DAW22015', 'bd_botiga_animals');
+    $sql = ("SELECT tbl_anunci.anu_nom, tbl_anunci.anu_contingut, tbl_anunci.anu_data, tbl_anunci.anu_foto, tbl_raca.raca_nom, tbl_contacte.contact_nom, tbl_contacte.contact_telf, tbl_contacte.contact_adre, tbl_municipi.municipi_nom, tbl_tipus_animal.tipus_anim_nom FROM ((((tbl_anunci INNER JOIN tbl_municipi ON tbl_anunci.mun_id = tbl_municipi.municipi_id) INNER JOIN tbl_contacte ON tbl_anunci.contact_id = tbl_contacte.contact_id) INNER JOIN tbl_raca ON tbl_anunci.raca_id = tbl_raca.raca_id) INNER JOIN tbl_tipus_animal ON tbl_raca.tipus_anim_id = tbl_tipus_animal.tipus_anim_id) ");  
+    if($municipi > 0) {
+      $sql.= "WHERE tbl_municipi.municipi_id = $municipi ";
+      $mu=0;
+    }
+    if($mu == 0) {
+      if ($animal>0){
+      $sql.= "&& tbl_tipus_animal.tipus_anim_id = $animal ";
+      }
+    }else{
+      if ($animal>0){
+        $sql.= "WHERE tbl_tipus_animal.tipus_anim_id = $animal ";
+      }
+    }
+	if($mu == 0) {
+		if (isset ($ToP)) $sql.= "&& tbl_anunci.anu_tipus = '$ToP' ";
+	}else{
+		if (isset ($ToP)){
+			$sql.= "WHERE tbl_anunci.anu_tipus = '$ToP' ";
 			$mu=0;
 		}
-		if($mu == 0) {
-			if ($animal>0){
-			$sql.= "&& tbl_tipus_animal.tipus_anim_id = $animal ";
-			}
-		}else{
-			if ($animal>0){
-				$sql.= "WHERE tbl_tipus_animal.tipus_anim_id = $animal ";
-			}
-		}
-		$datos = mysqli_query($con, $sql);
-		if(mysqli_num_rows($datos) > 0){
-			while($cerca = mysqli_fetch_array($datos)){
-				echo "$cerca[anu_nom]<br/>";
-				echo "$cerca[anu_contingut]<br/>";
-				echo "$cerca[raca_nom]<br/>";
-				echo "$cerca[contact_nom]<br/>";
-				echo "$cerca[contact_telf]<br/>";
-				echo "$cerca[contact_adre]<br/>";
-				echo "$cerca[municipi_nom]<br/>";
-				echo "$cerca[tipus_anim_nom]<br/>";
-				$fichero="image/$cerca[anu_foto]";
-				if(file_exists($fichero)){
-					echo "<img src='$fichero'/><br/><br/><br/><br/>";
-				}else{
-					echo "<img src='img/ups.jpg'/><br/><br/><br/><br/>";
-				}
-			}
-		}else{
-			echo "No hi ha dades";
-		}
-		mysqli_close($con);
-	}else{
-?>
+	}
+	$sql.= "ORDER BY tbl_anunci.anu_data DESC";
+    $datos = mysqli_query($con, $sql);
+    echo "<div class='box_specialoffers' id='busqueda'>";
+    if(mysqli_num_rows($datos) > 0){
+      while($cerca = mysqli_fetch_array($datos)){
+		$cerca['anu_nom'] = utf8_encode($cerca['anu_nom']);
+		$cerca['anu_contingut'] = utf8_encode($cerca['anu_contingut']);
+		$cerca['raca_nom'] = utf8_encode($cerca['raca_nom']);
+		$cerca['contact_nom'] = utf8_encode($cerca['contact_nom']);
+		$cerca['contact_adre'] = utf8_encode($cerca['contact_adre']);
+		$cerca['municipi_nom'] = utf8_encode($cerca['municipi_nom']);
+        echo "<div class='ficha_animal'>";
+          echo "<div class='titulo'>$cerca[anu_nom]</div>";
+          echo "<div class='info'>$cerca[anu_contingut]<br><br>";
+          echo "$cerca[anu_data]<br><br>";
+          echo "$cerca[tipus_anim_nom] / $cerca[raca_nom]<br><br>";
+          echo "$cerca[contact_nom] / $cerca[contact_telf]<br>";
+          echo "<div class='calle'>$cerca[municipi_nom], $cerca[contact_adre]</div></div>";
+          $fichero="images/$cerca[anu_foto]";
+          if(isset($fichero)){
+            echo "<a href='images/g_$cerca[anu_foto]' target='_blank'><div class='foto'><img src='$fichero'/></div></a>";
+          }else{
+            echo "<div class='foto'><img src='img/ups.jpg'/></div>";
+          }
+        echo "</div>";
+      }
+    }else{
+      echo "No hi ha dades";
+    }
+    echo "</div>";
+    mysqli_close($con);
+  }else{  
+?>    
+    <div class="box_specialoffers">
 
-
-            <div class="box_specialoffers">
-                
                 <div class="std">
+
+
     <!--div>
 
 <ul class="tabs">
@@ -807,10 +825,14 @@ if(isset ($_POST['cerca'])){
 			<?php
 				}
 ?>
+
             <div class="content_der">
 			<br />
 			<br />
-			<form name="form1" action="#" method="Post">
+			<form name="form1" action="index.php" method="Post">
+			Perdut o Trobat:<br />
+			<input type="radio" name="genere" <?php if (isset($genere) && $genere=="female") echo "checked";?> value="Perdut">Perdut<br />
+			<input type="radio" name="genere" <?php if (isset($genere) && $genere=="male") echo "checked";?> value="Trobat">Trobat<br /><br />
 			Municipi: <br />
 			<select name="municipi">
 				<option value="0">Tot el territori</option>
@@ -829,7 +851,7 @@ if(isset ($_POST['cerca'])){
 				<option value="13">Rubí</option>
 				<option value="14">Sant Cugat del Vallès</option>
 				<option value="15">Sitges</option>
-			</select><br />
+			</select><br /><br />
 			Animal: <br />
 			<select name="animal">
 				<option value="0">Tots els animals</option>
@@ -837,7 +859,12 @@ if(isset ($_POST['cerca'])){
 				<option value="2">Gat</option>
 				<option value="3">Ocell</option>
 				<option value="4">Altres</option>
-			</select><br />
+			</select><br /><br />
+			Franja de dates on buscar:<br />
+			Inici:<br />
+			<input type="date" name="data1"><br />
+			Final: <br />
+			<input type="date" name="data2"><br /><br />
 			<input type="hidden" name="cerca" value="1">
 			<input type="reset" value="Esborrar">
 			<input type="submit" value="Enviar">

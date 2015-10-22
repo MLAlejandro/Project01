@@ -1631,6 +1631,52 @@ input#searchbox{
 	margin-right:10px;
 	overflow: hidden;
 }
+#busqueda {
+    max-width: 680px;
+	margin-right:10px;
+	padding-right:0px;
+	padding-left: 0px;
+	text-align: left;
+}
+.titulo{
+	font-size: 35px;
+	font-weight: bold;
+	position: relative;
+	top: 80px;
+	left: 20px;
+	height: 50px;
+	}
+.info{
+	font-size: 15px;
+	position: relative;
+	width: 580px;
+	background-color: ;
+	top: 80px;
+	height: 100px;
+}
+.foto{
+	position: relative;
+	left: 430px;
+	top:30px;
+	height: 100px;
+	width: auto;
+}
+
+.calle{
+	float: bottom;
+	font-size: 15px;
+	position: relative;
+	width: 400px;
+	height: 40px;	
+}
+.ficha_animal{
+	width: 680px;
+	margin-right: 10px;
+	height: 300px;
+	background-image: url(../images/ficha.png);
+	padding-left: 50px;
+	margin-bottom: 60px;
+}
 .ver-todas{
 	text-align:right;
 }
