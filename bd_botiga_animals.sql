@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `bd_botiga_animals`
 --
-CREATE DATABASE IF NOT EXISTS `bd_botiga_animals` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `bd_botiga_animals` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci;
 USE `bd_botiga_animals`;
 
 -- --------------------------------------------------------
@@ -38,16 +38,43 @@ CREATE TABLE IF NOT EXISTS `tbl_anunci` (
   `mun_id` int(11) NOT NULL,
   `contact_id` int(11) NOT NULL,
   `anu_tipus` varchar(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tbl_anunci`
 --
 
 INSERT INTO `tbl_anunci` (`anu_id`, `anu_contingut`, `anu_nom`, `anu_data`, `anu_foto`, `raca_id`, `mun_id`, `contact_id`, `anu_tipus`) VALUES
-(1, 'Perdut gos de raça beagle a la platja de El Prat de Llobregat (zona aeroport) l''11 d''octubre al matí. Respon al nom de Tacat.', 'Perdut beagle a El Prat', '2015-10-11', 'tacat.jpg', 14, 4, 2, 'Perdut'),
-(2, 'Desaparegut gat amb collar i placa amb el nom de Ratlletes. És de tipus comú, ratllat de colors taronges. Rambla Badal, Barcelona.', 'Perdut gat', '2015-10-15', '', 17, 1, 6, 'Pedut');
-
+(1,'Desaparecido perro de raza beagle en la playa del Prat (zona aeropuerto). Responde al nombre de Tacat.', 'Perdido perro en El Prat', '2015-10-11', 'tacat.jpg', 14, 4, 2, 'Perdut'),
+(2,'Desaparecido gato con collar y placa con el nombre de Ratllets.', 'Perdido gato en Barcelona', '2015-10-15', 'comu1.jpg', 17, 1, 6, 'Perdut'),
+(3,'Desaparecido canario que responde a nombre de Pachi', 'Perdido pajaro en Barcelona', '2015-10-18', 'canari1.jpg', 20, 1, 6, 'Perdut'),
+(4,'Encontrado gato en Castellbisbal con collar', 'Encontrado gato en Castellbisbal', '2015-10-15', 'comu2.jpg', 17, 11, 6, 'Trobat'),
+(5,'Desaparecido husky que responde al nombre de Tobi', 'Perdido perro en Sant Joan d''Espí', '2015-10-16', 'husky1.jpg', 11, 3, 6, 'Perdut'),
+(6,'Desaparecido pastor aleman que responde al nombre de Bob', 'Perdido Perro en Barcelona', '2015-10-15', 'pa1.jpg', 9, 1, 6, 'Perdut'),
+(7,'Desaparecido gato que responde al nombre de Hidraulico', 'Perdido gato en Castelldefels', '2015-10-21', 'comu3.jpg', 17, 8, 6, 'Perdut'),
+(8,'Desaparecido boxer de 4 años que responde al nombre de Sam','Perdido perro en Castelldefels','2015-10-15','boxer1.jpg',8,1,1,'Perdut'),
+(9,'Desaparecido perro de raza boxer, se llama Piter','Perdido perro en Castelldefels','2015-10-14','boxer2.jpg',8,1,2,'Perdut'),
+(10,'Desaparecido perro de raza boxer','Perdido perro en Castelldefels','2015-09-15','boxer3.jpg',8,2,3,'Perdut'),
+(11,'Perdido pato que responde a nombre de Donal, si lo encuentra alguien por fabor no cocinar','Perdido pato en Sant Joan d''Espí','2015-10-13','anec1.jpg',26,3,4,'Perdut'),
+(12,'He encontrado un pastor aleman, dejo aqui mi numero de telefono','Encontrado perro en El Prat','2015-10-12','pa2.jpg',9,4,5,'Trobat'),
+(13,'He perdido a mi perro por Hospitalet, por fabor contacten si lo encuentran, es un pastor aleman','Perdido perro en Hospitalet','2015-10-11','pa3.jpg',9,5,6,'Perdut'),
+(14,'Desaparecido tejon, responde a nombre de Carlos','Perdido tejon en Martorell','2015-10-16','teixo1.jpg',25,6,1,'Perdut'),
+(15,'Encontrado golden retriever en Cornellà, si es sullo pongase en contacto con el numero de telefono de este anuncio','Encontrado perro en Cornellà','2015-10-17','gr1.jpg',10,7,2,'Trobat'),
+(16,'Ha aparecido un golden retriever en mi patio, porfabor contacten rapido','Encontrado perro en Castellbisbal','2014-10-18','gr2.jpg',10,8,3,'Trobat'),
+(17,'Desaparecido husky que responde al nombre de Silver','Perdido perro en Viladecans','2015-10-19','husky2.jpg',11,9,4,'Perdut'),
+(18,'Desaparecido perro en Begues, responde al nombre de Sam.','Perdido perro en Begues','2015-10-09','borderc1.jpg',12,10,5,'Perdut'),
+(19,'Desaparecido perro en Castellbisbal, tiene miedo de la gente pero si le das comida se deja cojer.','Perdido perro en Castellbisbal','2015-10-08','creuat1.jpg',13,11,6,'Perdut'),
+(20,'Desaparecido beagle en Sant Sadurní, responde al nombre de David.','Perdido perro en Sant Sadurní','2015-10-07','beagle1.jpg',14,12,1,'Perdut'),
+(21,'Encontrado gato dentro de casa con un collar sin direccion, se llama Salem.','Encontrado gato en Rubí','2015-10-07','persa1.jpg',15,13,2,'Trobat'),
+(22,'Desaparecido siames en Sant Cugat, por fabor llamen rapido al numero de contacto acaba de parir y tiene a los bebes aqui.','Perdido gato en Sant Cugat','2015-10-15','siames1.jpg',16,14,3,'Perdut'),
+(23,'He encontrado un gado de raza ¿normal? en mi casa si es de alguien llamen, no lo puedo tener mucho aqui.','Encontrado gato en Sitges','2015-10-14','comu4.jpg',17,15,4,'Trobat'),
+(24,'Desaparecido abisani tiene collar se llama Pneumatico.','Perdido gato en Martorell','2015-10-12','abisini1.jpg',18,6,5,'Perdut'),
+(25,'Encontrado gato con collar en Castelldefels, se llama Gato.','Encontrado gato en Castelldefels','2015-10-13','bobtail1.jpg',19,8,6,'Trobat'),
+(26,'Desaparecido canario en Castelldefels, adjunto foto, si lo encuentra alguien llamen al numero por fabor.','Perdido pajaro en Castelldefels','2015-10-04','canari2.jpg',20,8,1,'Perdut'),
+(27,'Desaparecido periquito en Cornellà, es el de la foto, si lo veis llamarme.','Perdido pajaro en Cornellà','2015-10-14','periquito1.jpg',21,7,2,'Perdut'),
+(28,'Ha desaparecido mi hurón Pedro, tiene el nombre en un collar, por fabor llamarme si lo veis.','Perdido hurón en Sant Feliu','2015-10-15','fura1.jpg',22,2,3,'Perdut'),
+(29,'Ha aparecido un canario que tiene pinta de ser de alguien asi que dejo la foto aqui.','Encontrado pajaro en Sant Joan d''Espí','2015-10-16','canill1.jpg',23,3,4,'Trobat'),
+(30,'Desaparecido hamster en Sant Joan d''Espi, se parece a una rata','Perdido hamster en Sant Joan d''Espí','2015-10-17','hamseter1.jpg',24,3,5,'Perdut');
 -- --------------------------------------------------------
 
 --
@@ -58,21 +85,23 @@ CREATE TABLE IF NOT EXISTS `tbl_contacte` (
   `contact_id` int(11) NOT NULL,
   `contact_nom` varchar(25) NOT NULL,
   `contact_telf` varchar(9) NOT NULL,
-  `contact_adre` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+  `contact_adre` varchar(50) NOT NULL,
+  `contact_email` varchar(35) NOT NULL,
+  `contact_contrasenya` varchar(20) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tbl_contacte`
 --
 
-INSERT INTO `tbl_contacte` (`contact_id`, `contact_nom`, `contact_telf`, `contact_adre`) VALUES
-(1, 'Carles Martín', '934534236', ''),
-(2, 'Antonio Gámez', '667542343', 'Carrer del Mig, 76 3r 1a'),
-(3, 'Carlos Martínez', '654583454', ''),
-(4, 'Isabel Vázquez', '698722284', ''),
-(5, 'Pedro Santiesteban', '656989931', 'Avinguda Carrilet, 54 3r'),
-(6, 'Sònia Gómez', '688341009', 'Gran Via de les Corts Catalanes, 12 Esc. A 3r 2a'),
-(7, 'Patricia Martín', '932124654', '');
+INSERT INTO `tbl_contacte` (`contact_id`, `contact_nom`, `contact_telf`, `contact_adre`, `contact_email`, `contact_contrasenya`) VALUES
+(1, 'Carles Martín', '934534236', '', 'carlesmartin@hotmail.com', 'asdf' ),
+(2, 'Antonio Gámez', '667542343', 'Carrer del Mig, 76 3r 1a', 'antoniogamez@hotmail.com', 'asdf'),
+(3, 'Carlos Martínez', '654583454', '', 'carlosmartinez@hotmail.com', 'asdf'),
+(4, 'Isabel Vázquez', '698722284', '', 'isabelvazquez@hotmail.com', 'asdf'),
+(5, 'Pedro Santiesteban', '656989931', 'Avinguda Carrilet, 54 3r', 'pedrosantiesteban@hotmail.com', 'asdf'),
+(6, 'Sònia Gómez', '688341009', 'Gran Via de les Corts Catalanes, 12 Esc. A 3r 2a', 'soniagomez@hotmail.com', 'asdf'),
+(7, 'Patricia Martín', '932124654', '', 'patriciamartin@hotmail.com', 'asdf');
 
 -- --------------------------------------------------------
 
@@ -83,7 +112,7 @@ INSERT INTO `tbl_contacte` (`contact_id`, `contact_nom`, `contact_telf`, `contac
 CREATE TABLE IF NOT EXISTS `tbl_municipi` (
   `municipi_id` int(11) NOT NULL,
   `municipi_nom` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tbl_municipi`
@@ -116,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `tbl_raca` (
   `raca_id` int(11) NOT NULL,
   `raca_nom` varchar(25) NOT NULL,
   `tipus_anim_id` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tbl_raca`
@@ -152,7 +181,7 @@ INSERT INTO `tbl_raca` (`raca_id`, `raca_nom`, `tipus_anim_id`) VALUES
 CREATE TABLE IF NOT EXISTS `tbl_tipus_animal` (
   `tipus_anim_id` int(11) NOT NULL,
   `tipus_anim_nom` varchar(25) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `tbl_tipus_animal`
