@@ -1,4 +1,11 @@
+<?php
+session_start();
 
+if(isset ($_SESSION['nombre'])){
+	$logejat=1;
+}
+
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
 <head>
@@ -72,15 +79,31 @@ Alimentación, accesorios, higiene, hábitat, educación, transporte, jaulas, ac
         <div class="page">
         <div class="header_new">
   	<h1>MISTER GUAU</h1>
-  <a href="index.php/"><img src="http://www.misterguau.com/skin/frontend/blank/theme048/images/logo.jpg" width="630" height="75" /></a>
+  <a href="index.php"><img src="http://www.misterguau.com/skin/frontend/blank/theme048/images/logo.jpg" width="630" height="75" /></a>
   </div>
   <div class="bC_caja">
     <ul class="menu-left">
-      <li><a href="registro.php">REGISTRO</a></li>
+      <?php
+	if (isset($logejat)){
+		if ($logejat!=0){
+		echo "<li>BIENVENIDO ".$_SESSION['nombre']." </li>";
+	?>
+	<form name="cerrarsesion" value="cerrarsesion" action="index.php" method="Post">
+		<input type="hidden" name="tancar" value="1">
+    <input class="cerrar" type="submit" value="CERRAR SESION"/>
+	</form>
+	<?php
+		}}else{
+	?>
+      <li><a href="MisterguauLogin.php">REGISTRO</a></li>
       <li>/</li>
             <li><a href="MisterguauLogin.php">INICIAR SESIÓN</a></li>
             <!--li>/</li>
       <li><a href="http://www.misterguau.com/index.php/customer/account/">MI CUENTA</a></li-->
+	  <?php
+	  }
+	
+	  ?>
     </ul>
     <ul class="menu-right">
       <li><a href="http://www.misterguau.org" target="_blank">BLOG</a></li>
@@ -95,13 +118,13 @@ Alimentación, accesorios, higiene, hábitat, educación, transporte, jaulas, ac
       <div id="destacados">
       <div id="menu_animales">
            <ul id="animales" class="lista_animales">
-              <li class="foto1"><a href="perro.html"></a></li>
-              <li class="foto2"><a href="gato.html"></a></li>
-              <li class="foto3"><a href="pez.html"></a></li>
-              <li class="foto4"><a href="pajaro.html"></a></li>
-              <li class="foto5"><a href="reptil.html"></a></li>
-              <li class="foto6"><a href="roedor.html"></a></li>
-              <li class="foto7"><a href="tortuga.html"></a></li>
+              <li class="foto1"><a href="perro.php"></a></li>
+              <li class="foto2"><a href="gato.php"></a></li>
+              <li class="foto3"><a href="pez.php"></a></li>
+              <li class="foto4"><a href="pajaro.php"></a></li>
+              <li class="foto5"><a href="reptil.php"></a></li>
+              <li class="foto6"><a href="roedor.php"></a></li>
+              <li class="foto7"><a href="tortuga.php"></a></li>
            </ul>
    	  </div>
       </div>
@@ -10579,47 +10602,50 @@ inactividad reproductiva. Su composición les permite cubrir holgadamente las ne
 								</div>
 							</div>            </div>
             <div class="content_der">
-			<form name="form1" action="index.php" method="Post">
-			Perdut o Trobat:<br />
-			<input type="radio" name="genere" value="Perdut">Perdut<br />
-			<input type="radio" name="genere" value="Trobat">Trobat<br /><br />
-			Municipi: <br />
-			<select name="municipi">
-				<option value="0">Tot el territori</option>
-				<option value="1">Barcelona</option>
-				<option value="2">Sant Feliu de Llobregat</option>
-				<option value="3">Sant Joan d''Espí</option>
-				<option value="4">El Prat de Llobregat</option>
-				<option value="5">L'Hospitalet de Llobregat</option>
-				<option value="6">Martorell</option>
-				<option value="7">Cornellà de Llobregat</option>
-				<option value="8">Castelldefels</option>
-				<option value="9">Viladecans</option>
-				<option value="10">Begues</option>
-				<option value="11">Castellbisbal</option>
-				<option value="12">Sant Sadurní d''Anoia</option>
-				<option value="13">Rubí</option>
-				<option value="14">Sant Cugat del Vallès</option>
-				<option value="15">Sitges</option>
-			</select><br /><br />
-			Animal: <br />
-			<select name="animal">
-				<option value="0">Tots els animals</option>
-				<option value="1">Gos</option>
-				<option value="2">Gat</option>
-				<option value="3">Ocell</option>
-				<option value="4">Altres</option>
-			</select><br /><br />
-			Franja de dates on buscar:<br />
-			Inici:<br />
-			<input type="date" name="data1"><br />
-			Final: <br />
-			<input type="date" name="data2"><br /><br />
-			<input type="hidden" name="cerca" value="1">
-			<input type="reset" value="Esborrar">
-			<input type="submit" value="Enviar">
-		</form>
-		<br /><br /><br /><br />
+      <div class="tbusc">BÚSQUEDA</div>
+      <div class="busc">
+      <form name="form1" action="index.php" method="Post">
+      Perdido o Encontrado:<br />
+      <input type="radio" name="genere" <?php if (isset($genere) && $genere=="female") echo "checked";?> value="Perdut">  Perdido<br />
+      <input type="radio" name="genere" <?php if (isset($genere) && $genere=="male") echo "checked";?> value="Trobat">  Encontrado<br /><br />
+      Municipio: <br />
+      <select name="municipi">
+        <option value="0">Todo el territorio</option>
+        <option value="1">Barcelona</option>
+        <option value="2">Sant Feliu de Llobregat</option>
+        <option value="3">Sant Joan d''Espí</option>
+        <option value="4">El Prat de Llobregat</option>
+        <option value="5">L'Hospitalet de Llobregat</option>
+        <option value="6">Martorell</option>
+        <option value="7">Cornellà de Llobregat</option>
+        <option value="8">Castelldefels</option>
+        <option value="9">Viladecans</option>
+        <option value="10">Begues</option>
+        <option value="11">Castellbisbal</option>
+        <option value="12">Sant Sadurní d''Anoia</option>
+        <option value="13">Rubí</option>
+        <option value="14">Sant Cugat del Vallès</option>
+        <option value="15">Sitges</option>
+      </select><br /><br />
+      Animal: <br />
+      <select name="animal">
+        <option value="0">Todos los animales</option>
+        <option value="1">Perro</option>
+        <option value="2">Gato</option>
+        <option value="3">Pajaro</option>
+        <option value="4">Otros</option>
+      </select><br /><br />
+      Fecha de inicio de búsqueda<br />
+      <input type="date" name="data1"><br /><br />
+      <input type="hidden" name="cerca" value="1">
+      <input class="boton" type="reset" value="BORRAR">
+      <input class="boton" type="submit" value="ENVIAR">
+    </form><br/><br />
+    <?php
+    if(isset($logejat)){
+      if ($logejat==1)echo "<form action='nuevoAnuncio.php'><input class='boton2' type='submit' value='CREAR NUEVO ANUNCIO'></form>";
+    }    ?>
+    </div>
 <div class="banner"><a href="mailto: clientes@misterguau.com"><img src="http://www.misterguau.com/media//Contactanos.jpg" alt="Tienda online" /></a></div>
 <div class="banner"><a title="Contactar tiendas f&iacute;sicas" href="http://www.misterguau.tv/tiendas-mister-guau" target="_blank"><img src="http://www.misterguau.com/media//Contacto02.jpg" alt="Contactar tiendas f&iacute;sicas" /></a></div>
 <div class="banner"><a title="Contactar veterinarios" href="http://www.misterguau.tv/veterinaria-mister-guau" target="_blank"><img src="http://www.misterguau.com/media//Contacto03_1.jpg" alt="Contactar veterinarios" /></a></div>

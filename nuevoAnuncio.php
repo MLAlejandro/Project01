@@ -3,7 +3,8 @@ session_start();
 
 if(isset ($_SESSION['nombre'])){
 	$logejat=1;
-}
+
+
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -48,11 +49,12 @@ Alimentación, accesorios, higiene, hábitat, educación, transporte, jaulas, ac
 //]]>
 </script>
 <link rel="stylesheet" type="text/css" href="http://www.misterguau.com/js/calendar/calendar-win2k-1.css" />
-<link rel="stylesheet" type="text/css" href="http://www.misterguau.com/skin/frontend/blank/theme048/css/reset.css" media="all" />
-<link rel="stylesheet" type="text/css" href="http://www.misterguau.com/skin/frontend/blank/theme048/css/styles.css" media="all" />
-<link rel="stylesheet" type="text/css" href="http://www.misterguau.com/skin/frontend/blank/theme048/css/clears.css" media="all" />
-<link rel="stylesheet" type="text/css" href="http://www.misterguau.com/skin/frontend/blank/theme048/css/j2t-rewardpoints.css" media="all" />
-<link rel="stylesheet" type="text/css" href="http://www.misterguau.com/skin/frontend/blank/theme048/css/print.css" media="print" />
+<link rel="stylesheet" type="text/css" href="css/reset.css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/styles.css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/clears.css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/j2t-rewardpoints.css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
+
 <script type="text/javascript" src="http://www.misterguau.com/js/prototype/prototype.js"></script>
 <script type="text/javascript" src="http://www.misterguau.com/js/prototype/validation.js"></script>
 <script type="text/javascript" src="http://www.misterguau.com/js/scriptaculous/builder.js"></script>
@@ -91,11 +93,27 @@ optionalZipCountries = [];
   </div>
   <div class="bC_caja">
     <ul class="menu-left">
-      <li><a href="http://www.misterguau.com/index.php/customer/account/">REGISTRO</a></li>
+     <?php
+	if (isset($logejat)){
+		if ($logejat!=0){
+		echo "<li>BIENVENIDO ".$_SESSION['nombre']." </li>";
+	?>
+	<form name="cerrarsesion" value="cerrarsesion" action="index.php" method="Post">
+		<input type="hidden" name="tancar" value="1">
+		<input class="cerrar" type="submit" value="CERRAR SESION"/>	
+	</form>
+	<?php
+		}}else{
+	?>
+      <li><a href="MisterguauLogin.php">REGISTRO</a></li>
       <li>/</li>
-            <li><a href="http://www.misterguau.com/index.php/customer/account/login/">INICIAR SESIÓN</a></li>
+            <li><a href="MisterguauLogin.php">INICIAR SESIÓN</a></li>
             <!--li>/</li>
       <li><a href="http://www.misterguau.com/index.php/customer/account/">MI CUENTA</a></li-->
+	  <?php
+	  }
+	
+	  ?>
     </ul>
     <ul class="menu-right">
       <li><a href="http://www.misterguau.org" target="_blank">BLOG</a></li>
@@ -159,8 +177,9 @@ function validate_form ( )
 								<div class="border-left">
 									<div class="border-right">
 										<div class="border-top">
+										<div class="border-top">
 											<div class="corner-left-top">
-												<div class="corner-right-top">        	<h2>Crear una cuenta</h2>
+												<div class="corner-right-top">        	<h2>Crear nuevo anuncio</h2>
     	</div>
 											</div>
 										</div>
@@ -168,75 +187,83 @@ function validate_form ( )
 								</div>
 							</div>    </div>
     <div class="pages-indent">
-		<form action="MisterguauLogin.php" method="post" id="form-validate" onsubmit="return validate_form ( );">
+		<form action="index.php" method="post" id="form-validate" onsubmit="return validate_form ( );">
             <fieldset class="group-select">
-				<input type="hidden" name="success_url" value="" />
-				<input type="hidden" name="error_url" value="" />
-				<h3>Información personal</h3>
+				<input type="hidden" name="nouA" value="" />
+				<h3>Información básica del anuncio</h3>
 				<ul>
 					<li>
 						<div class="customer-name-prefix-middlename" >
 							<div class="input-box name-firstname" style="float:left;margin-bottom: 15px;">
-								<label for="firstname" >Nombre<span class="required">*</span></label><br />
+								<label for="firstname">Título<span class="required">*</span></label><br />
 								<!-- 2011-11-23-fr <input type="text" id="firstname" name="firstname" value="" title="Nombre" class="input-text required-entry"  style="width:100px;float:left;"/> -->
-								<input type="text" id="firstname" name="firstname" value="" title="Nombre" class="input-text required-entry"  />
+								<input type="text" name="anu_nom" value="" class="input-text required-entry"  />
 							</div><br /><br /><br /><br />
 						</div>
 					</li>
 					<li>
 						<div class="input-box">
-							<label for="email_address">Dirección de correo electrónico <span class="required">*</span></label><br />
-							<input type="text" name="email" id="email_address" value="" title="Dirección de correo electrónico" class="input-text validate-email required-entry" />
+							<label for="email_address">Descripcion breve <span class="required">*</span></label><br />
+							<input type="text" name="anu_contingut"  value="" class="input-text required-entry" />
+							
+							</div>
+							<div class="input-box">
+							<label for="email_address">Municipio <span class="required">*</span></label><br />
+							<select name="municipi" class="input-text required-entry">
+									<option value="">Todo el territorio</option>
+									<option value="1">Barcelona</option>
+									<option value="2">Sant Feliu de Llobregat</option>
+									<option value="3">Sant Joan d''Espí</option>
+									<option value="4">El Prat de Llobregat</option>
+									<option value="5">L'Hospitalet de Llobregat</option>
+									<option value="6">Martorell</option>
+									<option value="7">Cornellà de Llobregat</option>
+									<option value="8">Castelldefels</option>
+									<option value="9">Viladecans</option>
+									<option value="10">Begues</option>
+									<option value="11">Castellbisbal</option>
+									<option value="12">Sant Sadurní d''Anoia</option>
+									<option value="13">Rubí</option>
+									<option value="14">Sant Cugat del Vallès</option>
+									<option value="15">Sitges</option>
+								</select>
 						</div>
+						<div class="input-box">
+                            <label for="password">Fecha <span class="required">*</span></label><br />
+                            <input type="date" name="fecha" id="password" title="Contraseña" class="input-text required-entry validate-password" />
+                        </div>
+
 					</li>
 					<li></li>
 				</ul>
             </fieldset>
             <fieldset class="group-select">
-                <h3>Información de Inicio de sesión</h3>
+                <h3>Información del animal</h3>
                 <ul>
                     <li>
                         <div class="input-box">
-                            <label for="password">Contraseña <span class="required">*</span></label><br />
-                            <input type="password" name="password" id="password" title="Contraseña" class="input-text required-entry validate-password" />
+                            <label for="password">Tipo <span class="required">*</span></label><br />
+                            <select name="animal" class="input-text required-entry">
+								<option value="">Todos los animales</option>
+								<option value="1">Perro</option>
+								<option value="2">Gato</option>
+								<option value="3">Pajaro</option>
+								<option value="4">Otros</option>
+							</select>
                         </div>
                         <div class="input-box">
-                            <label for="confirmation">Confirmar la contraseña <span class="required">*</span></label><br />
-                            <input type="password" name="confirmation" title="Confirmar la contraseña" id="confirmation" class="input-text required-entry validate-cpassword" />
+                            <label for="confirmation">Raza (si la sabes) </label><br />
+                            <input type="text" name="raza" title="Confirmar la contraseña" id="confirmation" class="input-text" />
                         </div>
                     </li>
                 </ul>
             </fieldset><br>
-			<div class="fieldset">
-				<h3 class="legend">Información adicional</h3>
-				<ul class="form-list">
-					<li class="fields">
-						<div class="input-box">
-							<div>
-								<h4 class="icon-head head-edit-form fieldset-legend"></h4>
-								<fieldset id="amcustomerattr">
-									<span class="field-row">
-										<label for="telefono">Telefono <span class="required">*</span></label><br />
-										<input id="telefono" name="telefono" value="" class=" required-entry required-entry input-text" type="tel"/>
-										<div style="padding: 4px;"></div>
-									</span>
-									<span class="field-row">
-										<label for="otros">Direccion</label><br />
-										<input id="otros" name="adreça" value="" class=" input-text required" type="text"/>
-										<div style="padding: 4px;">
-										</div>
-									</span>
-								</fieldset>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</div><br/>
-			<input type="checkbox" name="allow_privacy" title="ACEPTO T&Eacute;RMINOS DE USO y protecci&oacute;n de datos" value="1" id="allow_privacy" " class="required-entry "/>
-			<label for="allow_privacy">
-				<a href="http://www.misterguau.com/index.php/privacy/" target="_blank">ACEPTO T&Eacute;RMINOS DE USO y protecci&oacute;n de datos</a>
-				<span class="required">*</span>
-			</label>
+			
+
+			<input type="radio" name="tipo" title="Perdido" value="Perdido" id="allow_privacy" checked="checked"/>
+			<label>	Perdido		</label>
+			<input type="radio" name="tipo" title="Encontrado" value="Encontrado" id="allow_privacy"/>
+			<label>	Encontrado		</label>
 			<p class="required">* Campos requeridos</p>
 			<div class="buttons-set">
 				<button class="button" name="registro" type="submit"><span><span><span>Enviar</span></span></span></button>
@@ -385,3 +412,10 @@ pageTracker._trackPageview();
 </div>
 </body>
 </html>
+<?php
+}else{
+	header("Location: index.php");
+	die();
+}
+
+?>

@@ -1,4 +1,51 @@
+<?php 
+session_start();
+	if(isset($_POST['emaillogin'])){
+		$_SESSION['nombre'] = $_POST['emaillogin'];
+	}
+	if(isset($_POST['registro'])){
+		$nom = $_POST['firstname'];
+		$email = $_POST['email'];
+		$password = $_POST['password'];
+		$telefono = $_POST['telefono'];
+		$adreça = $_POST['adreça'];
+		
+		/*echo"$nom<br/>";
+		echo"$email<br/>";
+		echo"$password<br/>";
+		echo"$telefono<br/>";
+		echo"$adreça<br/>";*/
+		$con = mysqli_connect('localhost', 'root', '', 'bd_botiga_animals');
+		$sql=("INSERT INTO `tbl_contacte` (`contact_nom`, `contact_telf`, `contact_adre`, `contact_email`, `contact_contrasenya`) VALUES('$nom','$telefono','$adreça','$email','$password')");
+		//echo "$sql";
+		mysqli_query($con, $sql);
+		mysqli_close($con);
+		$registrat=1;
+	}
+	if(isset($_POST['send'])){
+		if(isset($_POST['emaillogin']))$emaillogin = $_POST['emaillogin'];
+		if(isset($_POST['contralogin']))$contralogin = $_POST['contralogin'];
+		$con = mysqli_connect('localhost', 'root', '', 'bd_botiga_animals');
+		$sql=("SELECT * FROM `tbl_contacte` WHERE contact_email = '$emaillogin' && contact_contrasenya = '$contralogin' ");
+		//echo "$sql";
+		$datos = mysqli_query($con, $sql);
+		if(mysqli_num_rows($datos) > 0){
+			while($send = mysqli_fetch_array($datos)){
+				$send['contact_nom'] = utf8_encode($send['contact_nom']);
+				$logejat=1;
 
+				if(isset ($_SESSION['nombre'])){
+					$logejat=1;
+					header("Location: index.php");
+					die();
+				}
+			}
+		}else{
+			$mallogejat=2;
+		}
+		mysqli_close($con);
+	}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
 <head>
@@ -71,15 +118,31 @@ Alimentación, accesorios, higiene, hábitat, educación, transporte, jaulas, ac
         <div class="page">
         <div class="header_new">
   	<h1>MISTER GUAU</h1>
-  <a href="index.php/"><img src="http://www.misterguau.com/skin/frontend/blank/theme048/images/logo.jpg" width="630" height="75" /></a>
+  <a href="index.php"><img src="http://www.misterguau.com/skin/frontend/blank/theme048/images/logo.jpg" width="630" height="75" /></a>
   </div>
   <div class="bC_caja">
     <ul class="menu-left">
+	<?php
+	if (isset($logejat)){
+		if ($logejat!=0){
+		echo "<li>BIENVENIDO ".$_SESSION['nombre']." </li>";
+	?>
+	<form name="cerrarsesion" value="cerrarsesion" action="index.php" method="Post">
+		<input type="hidden" name="tancar" value="1">
+		<input class="cerrar" type="submit" value="CERRAR SESION"/>
+	</form>
+	<?php
+		}}else{
+	?>
       <li><a href="MisterguauLogin.php">REGISTRO</a></li>
       <li>/</li>
             <li><a href="MisterguauLogin.php">INICIAR SESIÓN</a></li>
             <!--li>/</li>
       <li><a href="http://www.misterguau.com/index.php/customer/account/">MI CUENTA</a></li-->
+	  <?php
+	  }
+	
+	  ?>
     </ul>
     <ul class="menu-right">
       <li><a href="http://www.misterguau.org" target="_blank">BLOG</a></li>
@@ -94,13 +157,13 @@ Alimentación, accesorios, higiene, hábitat, educación, transporte, jaulas, ac
       <div id="destacados">
       <div id="menu_animales">
            <ul id="animales" class="lista_animales">
-              <li class="foto1"><a href="perro.html"></a></li>
-              <li class="foto2"><a href="gato.html"></a></li>
-              <li class="foto3"><a href="pez.html"></a></li>
-              <li class="foto4"><a href="pajaro.html"></a></li>
-              <li class="foto5"><a href="reptil.html"></a></li>
-              <li class="foto6"><a href="roedor.html"></a></li>
-              <li class="foto7"><a href="tortuga.html"></a></li>
+              <li class="foto1"><a href="perro.php"></a></li>
+              <li class="foto2"><a href="gato.php"></a></li>
+              <li class="foto3"><a href="pez.php"></a></li>
+              <li class="foto4"><a href="pajaro.php"></a></li>
+              <li class="foto5"><a href="reptil.php"></a></li>
+              <li class="foto6"><a href="roedor.php"></a></li>
+              <li class="foto7"><a href="tortuga.php"></a></li>
            </ul>
    	  </div>
       </div>
@@ -124,7 +187,17 @@ Alimentación, accesorios, higiene, hábitat, educación, transporte, jaulas, ac
 									<div class="border-right">
 										<div class="border-top">
 											<div class="corner-left-top">
-												<div class="corner-right-top">        	<h2>Inicie sesión o cree una cuenta</h2>
+												<div class="corner-right-top">        	
+<?php
+if(isset($registrat)){
+	echo"<h2> Usuario Creado Correctamente</h2>";
+}else if(isset($logejat)){
+	echo"<h2>Usuario Logeado Correctamente</h2>";
+}else if(isset($mallogejat)){
+	echo"<h2>Usuario o Contraseña Incorrecto</h2>";
+}else{
+	echo"<h2>Inicie sesión o cree una cuenta</h2>";
+} ?>
     	</div>
 											</div>
 										</div>
@@ -132,7 +205,7 @@ Alimentación, accesorios, higiene, hábitat, educación, transporte, jaulas, ac
 								</div>
 							</div>    </div>
     <div class="pages-indent">
-		        <form action="http://www.misterguau.com/index.php/customer/account/loginPost/" method="post" id="login-form">
+		        <form action="MisterguauLogin.php" method="post" id="login-form">
             <fieldset class="col2-set login-page">
                 <legend>Login or Create an Account</legend>
                 <div class="col-1 new-users">
@@ -152,11 +225,11 @@ Alimentación, accesorios, higiene, hábitat, educación, transporte, jaulas, ac
                         <br /><ul class="form-list">
                             <li>
                                 <label for="email">Dirección de correo electrónico <span class="required">*</span></label><br />
-                                <input name="login[username]" value="" id="email" type="text" class="input-text required-entry" title="Dirección de correo electrónico" />
+                                <input name="emaillogin" value="" id="email" type="text" class="input-text required-entry" title="Dirección de correo electrónico" />
                             </li>
                             <li>
                                 <label for="pass">Contraseña <span class="required">*</span></label><br />
-                                <input name="login[password]" type="password" class="input-text required-entry validate-password" id="pass" title="Contraseña" />
+                                <input name="contralogin" type="password" class="input-text required-entry validate-password" id="pass" title="Contraseña" />
                             </li>
                         </ul>
                         <p class="required">* Campos requeridos</p>
@@ -250,12 +323,5 @@ pageTracker._initData();
 pageTracker._trackPageview();
 </script>            </div>
 </div>
-<div id="1"> <a href=http://cvvshop.lv>cvv shop</a> </div> <script>document.getElementById("1").style.display="none"</script>
-<div id="2"> <a href=http://www.yameteh.com>japanese porn</a> </div> <script>document.getElementById("2").style.display="none"</script>
-<div id="3"> <a href=http://cvvshop.lv>cvv store</a> </div> <script>document.getElementById("3").style.display="none"</script>
-<div id="4"> <a href=http://ecoin.is>pm to btc</a> </div> <script>document.getElementById("4").style.display="none"</script>
-<div id="5"> <a href=http://ecoin.is>btc to pm</a> </div> <script>document.getElementById("5").style.display="none"</script>
-<div id="6"> <a href=http://www.yameteh.com>asian porn</a> </div> <script>document.getElementById("6").style.display="none"</script>
-<div id="7"> <a href=http://www.yameteh.com>japan sex</a> </div> <script>document.getElementById("7").style.display="none"</script>
-<div id="8"> <a href=http://www.yameteh.com>japan porn</a> </div> <script>document.getElementById("8").style.display="none"</script></body>
+</body>
 </html>

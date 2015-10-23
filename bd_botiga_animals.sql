@@ -31,12 +31,14 @@ USE `bd_botiga_animals`;
 CREATE TABLE IF NOT EXISTS `tbl_anunci` (
   `anu_id` int(11) NOT NULL,
   `anu_contingut` varchar(255) NOT NULL,
-  `anu_nom` varchar(25) NOT NULL,
+  `anu_nom` varchar(50) NOT NULL,
   `anu_data` date NOT NULL,
   `anu_foto` varchar(50) NOT NULL,
   `raca_id` int(11) NOT NULL,
   `mun_id` int(11) NOT NULL,
   `contact_id` int(11) NOT NULL,
+  `email_contact` varchar(50) NOT NULL,
+  `desactivat` boolean NOT NULL default true,
   `anu_tipus` varchar(10) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -57,23 +59,23 @@ INSERT INTO `tbl_anunci` (`anu_id`, `anu_contingut`, `anu_nom`, `anu_data`, `anu
 (10,'Desaparecido perro de raza boxer','Perdido perro en Castelldefels','2015-09-15','boxer3.jpg',8,2,3,'Perdut'),
 (11,'Perdido pato que responde a nombre de Donal, si lo encuentra alguien por fabor no cocinar','Perdido pato en Sant Joan d''Espí','2015-10-13','anec1.jpg',26,3,4,'Perdut'),
 (12,'He encontrado un pastor aleman, dejo aqui mi numero de telefono','Encontrado perro en El Prat','2015-10-12','pa2.jpg',9,4,5,'Trobat'),
-(13,'He perdido a mi perro por Hospitalet, por fabor contacten si lo encuentran, es un pastor aleman','Perdido perro en Hospitalet','2015-10-11','pa3.jpg',9,5,6,'Perdut'),
+(13,'He perdido a mi perro por Hospitalet, por fabor contacten si lo encuentran, es un pastor aleman','Perdido perro en Hospitalet','2015-10-11','',9,5,6,'Perdut'),
 (14,'Desaparecido tejon, responde a nombre de Carlos','Perdido tejon en Martorell','2015-10-16','teixo1.jpg',25,6,1,'Perdut'),
 (15,'Encontrado golden retriever en Cornellà, si es sullo pongase en contacto con el numero de telefono de este anuncio','Encontrado perro en Cornellà','2015-10-17','gr1.jpg',10,7,2,'Trobat'),
-(16,'Ha aparecido un golden retriever en mi patio, porfabor contacten rapido','Encontrado perro en Castellbisbal','2014-10-18','gr2.jpg',10,8,3,'Trobat'),
+(16,'Ha aparecido un golden retriever en mi patio, porfabor contacten rapido','Encontrado perro en Castelldefels','2014-10-18','gr2.jpg',10,8,3,'Trobat'),
 (17,'Desaparecido husky que responde al nombre de Silver','Perdido perro en Viladecans','2015-10-19','husky2.jpg',11,9,4,'Perdut'),
 (18,'Desaparecido perro en Begues, responde al nombre de Sam.','Perdido perro en Begues','2015-10-09','borderc1.jpg',12,10,5,'Perdut'),
-(19,'Desaparecido perro en Castellbisbal, tiene miedo de la gente pero si le das comida se deja cojer.','Perdido perro en Castellbisbal','2015-10-08','creuat1.jpg',13,11,6,'Perdut'),
+(19,'Desaparecido perro en Castellbisbal, tiene miedo de la gente pero si le das comida se deja cojer.','Perdido perro en Castellbisbal','2015-10-08','',13,11,6,'Perdut'),
 (20,'Desaparecido beagle en Sant Sadurní, responde al nombre de David.','Perdido perro en Sant Sadurní','2015-10-07','beagle1.jpg',14,12,1,'Perdut'),
 (21,'Encontrado gato dentro de casa con un collar sin direccion, se llama Salem.','Encontrado gato en Rubí','2015-10-07','persa1.jpg',15,13,2,'Trobat'),
 (22,'Desaparecido siames en Sant Cugat, por fabor llamen rapido al numero de contacto acaba de parir y tiene a los bebes aqui.','Perdido gato en Sant Cugat','2015-10-15','siames1.jpg',16,14,3,'Perdut'),
 (23,'He encontrado un gado de raza ¿normal? en mi casa si es de alguien llamen, no lo puedo tener mucho aqui.','Encontrado gato en Sitges','2015-10-14','comu4.jpg',17,15,4,'Trobat'),
 (24,'Desaparecido abisani tiene collar se llama Pneumatico.','Perdido gato en Martorell','2015-10-12','abisini1.jpg',18,6,5,'Perdut'),
-(25,'Encontrado gato con collar en Castelldefels, se llama Gato.','Encontrado gato en Castelldefels','2015-10-13','bobtail1.jpg',19,8,6,'Trobat'),
+(25,'Encontrado perro con collar en Castelldefels, se llama Perro.','Encontrado perro en Castelldefels','2015-10-13','',13,8,6,'Trobat'),
 (26,'Desaparecido canario en Castelldefels, adjunto foto, si lo encuentra alguien llamen al numero por fabor.','Perdido pajaro en Castelldefels','2015-10-04','canari2.jpg',20,8,1,'Perdut'),
 (27,'Desaparecido periquito en Cornellà, es el de la foto, si lo veis llamarme.','Perdido pajaro en Cornellà','2015-10-14','periquito1.jpg',21,7,2,'Perdut'),
 (28,'Ha desaparecido mi hurón Pedro, tiene el nombre en un collar, por fabor llamarme si lo veis.','Perdido hurón en Sant Feliu','2015-10-15','fura1.jpg',22,2,3,'Perdut'),
-(29,'Ha aparecido un canario que tiene pinta de ser de alguien asi que dejo la foto aqui.','Encontrado pajaro en Sant Joan d''Espí','2015-10-16','canill1.jpg',23,3,4,'Trobat'),
+(29,'Ha aparecido un canario que tiene pinta de ser de alguien asi que dejo la foto aqui.','Encontrado pajaro en Sant Joan d''Espí','2015-10-16','',23,3,4,'Trobat'),
 (30,'Desaparecido hamster en Sant Joan d''Espi, se parece a una rata','Perdido hamster en Sant Joan d''Espí','2015-10-17','hamseter1.jpg',24,3,5,'Perdut');
 -- --------------------------------------------------------
 
@@ -152,6 +154,10 @@ CREATE TABLE IF NOT EXISTS `tbl_raca` (
 --
 
 INSERT INTO `tbl_raca` (`raca_id`, `raca_nom`, `tipus_anim_id`) VALUES
+(1,'No se sabe',1),
+(2,'No se sabe',2),
+(3,'No se sabe',3),
+(4,'No se sabe',4),
 (8, 'Bòxer', 1),
 (9, 'Pastor alemany', 1),
 (10, 'Golden retriever', 1),

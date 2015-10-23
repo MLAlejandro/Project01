@@ -1638,44 +1638,123 @@ input#searchbox{
 	padding-left: 0px;
 	text-align: left;
 }
+.busc{
+	text-align: left;
+	padding-left: 15px;
+	padding-top: 15px;
+	background-color: white;
+	padding-bottom: 10px;
+	border-bottom: #000 solid 3px;
+	color: black;
+	font-weight: normal;
+    font-size: 12px;
+    font-family: Verdana, Geneva, sans-serif;
+    margin-bottom: 10px;
+}
+.boton{
+	text-align: center;
+	margin-left: 24px;
+	color: #000;
+    font-size: 11px;
+    font-weight: bold;
+    border: 0px;
+ 	cursor: pointer;
+
+}
+.boton2{
+	text-align: center;
+	margin-left: 19px;
+    color: #000;
+    font-size: 11px;
+    font-weight: bold;
+	border: 0px;
+ 	cursor: pointer;
+}
+.boton3{
+	text-align: center;
+	color: #000;
+	font-size: 11px;
+	font-weight: bold;
+	border: 0px;
+ 	cursor: pointer;
+ 	background-color: #effff5;
+}
+.retornat{
+	left: 330px;
+	width: 50px;
+	height: 12px;
+	position: relative;
+	top: 60px;
+}
+.cerrar{
+	background-color: black;
+	font-size: 15px;
+	color: #66ff99;
+	font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    border: 0px;
+    margin-left: 10px;
+    margin-top: 2px;
+}
+.tbusc{
+	text-align: center;
+	padding-top: 10px;
+	background-color: white;
+	color: black;
+	font-weight: bold;
+    font-size: 12px;
+    font-family: Verdana, Geneva, sans-serif;
+}
 .titulo{
-	font-size: 35px;
+	font-size: 20px;
 	font-weight: bold;
 	position: relative;
-	top: 80px;
-	left: 20px;
-	height: 50px;
+	top: 10px;
+	left: 0px;
+	height: 20px;
+	width: 640px;
+	background-color: ;
+	float: left;
 	}
 .info{
-	font-size: 15px;
+	font-size: 12px;
 	position: relative;
-	width: 580px;
-	background-color: ;
-	top: 80px;
+	width: 450px;
+	top: 30px;
+	left: 0px;
 	height: 100px;
+	float: left;
 }
 .foto{
 	position: relative;
-	left: 430px;
-	top:30px;
+	top: 35px;
+	left: -80px;
 	height: 100px;
-	width: auto;
+	float: right;
+}
+.fotoani{
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 }
 
 .calle{
 	float: bottom;
-	font-size: 15px;
+	font-size: 12px;
 	position: relative;
-	width: 400px;
+	width: 450px;
 	height: 40px;	
 }
 .ficha_animal{
 	width: 680px;
 	margin-right: 10px;
-	height: 300px;
-	background-image: url(../images/ficha.png);
-	padding-left: 50px;
-	margin-bottom: 60px;
+	height: 200px;
+	padding-left: 20px;
+	margin-bottom: 0px;
+	margin-top: 10px;
+	position: relative;
+	color: black;
+	border-bottom: #000 solid 3px;
 }
 .ver-todas{
 	text-align:right;
